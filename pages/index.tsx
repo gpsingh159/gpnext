@@ -5,7 +5,25 @@ import styles from '@/styles/Home.module.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home() {
+interface Props{
+  todos: Array<{id: number , title : string}> ;
+}
+export async function getServerSideProps() {
+  //setTimeout(async () => {
+    const resp = await fetch("https://jsonplaceholder.typicode.com/todos");
+    const data = await resp.json();
+    console.log("type of data ",typeof data)
+    console.log("data")
+ // }, 3000);
+  return {
+    props: {
+      todos: data,
+    },
+  };
+}
+
+export default function Home(props:Props) {
+  const {todos} = props ;
   return (
     <>
       <Head>
@@ -14,6 +32,16 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      {todos?.length === 0 ? (
+        <div> Loading... </div>
+      ) : (
+        todos?.map((todo) => (
+          <li key={todo.id}>
+            {" "}
+            {todo.id} : {todo.title}
+          </li>
+        ))
+      )}
       <main className={`${styles.main} ${inter.className}`}>
         <div className={styles.description}>
           <p>
