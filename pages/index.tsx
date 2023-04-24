@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
+import { useEffect, useState } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -9,12 +10,16 @@ interface Props{
   todos: Array<{id: number , title : string}> ;
 }
 export async function getServerSideProps() {
-  //setTimeout(async () => {
-    const resp = await fetch("https://jsonplaceholder.typicode.com/todos");
-    const data = await resp.json();
-    console.log("type of data ",typeof data)
-    console.log("data")
- // }, 3000);
+  // export async function getInitialProps() {
+    let data = null ;
+    let resp = null ;
+  // setTimeout(async () => {
+     resp = await fetch("https://jsonplaceholder.typicode.com/todos");
+   
+//  }, 3000);
+ data = await resp?.json();
+ console.log("type of data ",typeof data)
+ console.log("data")
   return {
     props: {
       todos: data,
@@ -22,8 +27,20 @@ export async function getServerSideProps() {
   };
 }
 
-export default function Home(props:Props) {
-  const {todos} = props ;
+// export default function Home(props:Props) {
+  // const {todos} = props ;
+  export default function Home() {
+ const [todos, setTodods] = useState([]) ;
+
+ useEffect(() => {
+  const fetchTodos = async () => {
+  const resp = await fetch("https://jsonplaceholder.typicode.com/todos");
+  const  data = await resp?.json() 
+  setTodods(data);
+  };
+  fetchTodos();
+ }, [])
+ 
   return (
     <>
       <Head>
