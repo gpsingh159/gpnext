@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import { useEffect, useState } from "react";
-import Helmet from "react-helmet";
+// import Helmet from "react-helmet";
 
 const inter = Inter({ subsets: ["latin"] });
 
