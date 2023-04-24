@@ -1,46 +1,51 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
-import { useEffect, useState } from 'react'
+import Head from "next/head";
+import Image from "next/image";
+import { Inter } from "next/font/google";
+import styles from "@/styles/Home.module.css";
+import { useEffect, useState } from "react";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
-interface Props{
-  todos: Array<{id: number , title : string}> ;
+interface Props {
+  todos: Array<{ id: number; title: string }>;
 }
-export async function getServerSideProps() {
-  // export async function getInitialProps() {
-    let data = null ;
-    let resp = null ;
-  // setTimeout(async () => {
-     resp = await fetch("https://jsonplaceholder.typicode.com/todos");
-   
-//  }, 3000);
- data = await resp?.json();
- console.log("type of data ",typeof data)
- console.log("data")
-  return {
-    props: {
-      todos: data,
-    },
-  };
-}
+// export async function getServerSideProps() {
+//   // export async function getInitialProps() {
+//     let data = null ;
+//     let resp = null ;
+//   // setTimeout(async () => {
+//      resp = await fetch("https://jsonplaceholder.typicode.com/todos");
+
+// //  }, 3000);
+//  data = await resp?.json();
+//  console.log("type of data ",typeof data)
+//  console.log("data")
+//   return {
+//     props: {
+//       todos: data,
+//     },
+//   };
+// }
 
 // export default function Home(props:Props) {
-  // const {todos} = props ;
-  export default function Home() {
- const [todos, setTodods] = useState([]) ;
-
- useEffect(() => {
-  const fetchTodos = async () => {
-  const resp = await fetch("https://jsonplaceholder.typicode.com/todos");
-  const  data = await resp?.json() 
-  setTodods(data);
+// const {todos} = props ;
+export default function Home() {
+  type todo = {
+    id: number;
+    title: string;
   };
-  fetchTodos();
- }, [])
+  const [todos, setTodos] = useState<todo[]>([]);
  
+
+  useEffect(() => {
+    const fetchTodos = async () => {
+      const resp = await fetch("https://jsonplaceholder.typicode.com/todos");
+      const data = await resp?.json();
+      setTodos(data);
+    };
+    fetchTodos();
+  }, []);
+
   return (
     <>
       <Head>
@@ -71,7 +76,7 @@ export async function getServerSideProps() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              By{' '}
+              By{" "}
               <Image
                 src="/vercel.svg"
                 alt="Vercel Logo"
@@ -155,5 +160,5 @@ export async function getServerSideProps() {
         </div>
       </main>
     </>
-  )
+  );
 }
