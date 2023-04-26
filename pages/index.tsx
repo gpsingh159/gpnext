@@ -11,40 +11,46 @@ interface Props {
   todos: Array<{ id: number; title: string }>;
 }
 // export async function getServerSideProps() {
-//   // export async function getInitialProps() {
-//     let data = null ;
-//     let resp = null ;
-//   // setTimeout(async () => {
-//      resp = await fetch("https://jsonplaceholder.typicode.com/todos");
+  // export async function getInitialProps() {
+    export async function getStaticProps() {
+    let data = null ;
+    let resp = null ;
+  // setTimeout(async () => {
+     resp = await fetch("https://jsonplaceholder.typicode.com/todos");
 
-// //  }, 3000);
-//  data = await resp?.json();
-//  console.log("type of data ",typeof data)
-//  console.log("data")
-//   return {
-//     props: {
-//       todos: data,
-//     },
-//   };
-// }
-
-// export default function Home(props:Props) {
-// const {todos} = props ;
-export default function Home() {
-  type todo = {
-    id: number;
-    title: string;
+//  }, 3000);
+ data = await resp?.json();
+ console.log("type of data ",typeof data)
+ console.log("data")
+  return {
+    props: {
+      todos: data,
+    },
   };
-  const [todos, setTodos] = useState<todo[]>([]);
+}
 
-  useEffect(() => {
-    const fetchTodos = async () => {
-      const resp = await fetch("https://jsonplaceholder.typicode.com/todos");
-      const data = await resp?.json();
-      setTodos(data);
-    };
-    fetchTodos();
-  }, []);
+export default function Home(props:Props) {
+const {todos} = props ;
+
+interface todo  {
+  id: number;
+  title: string;
+};
+// export default function Home() {
+  // type todo = {
+  //   id: number;
+  //   title: string;
+  // };
+  // const [todos, setTodos] = useState<todo[]>([]);
+
+  // useEffect(() => {
+  //   const fetchTodos = async () => {
+  //     const resp = await fetch("https://jsonplaceholder.typicode.com/todos");
+  //     const data = await resp?.json();
+  //     setTodos(data);
+  //   };
+  //   fetchTodos();
+  // }, []);
 
   return (
     <>
